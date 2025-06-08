@@ -1,18 +1,27 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
 
 public class UIManagement : MonoBehaviour
 {
-    public GameObject panel;
-    private bool isPanelOpen = false;
+    //panel(which is wrote like panel) means menu Panel
+    public GameObject panel, instructionPanel;
+    private bool isPanelOpen = false, isInstructionPanelOpen = false;
     private int score;
     public Text scoreText, objectsText;
     public GameObject levelCompletedText;
     private int ObjectsQuantity;
+    public Dropdown difficultyDropdown;
+
+    public LevelDifficultyManager levelDifficultyManager;
+
+    public PublicEnvironemnt publicEnvironemnt;
     void Start()
     {
         score = 0;
+        difficultyDropdown.value = PlayerPrefs.GetInt("Difficulty");
+        instructionPanel.SetActive(false);
         panel.SetActive(false);
         scoreText.text = "Score" + score.ToString();
         levelCompletedText.SetActive(false);
@@ -33,6 +42,21 @@ public class UIManagement : MonoBehaviour
             scoreText.text = "SCORE " + score.ToString();
         }
 
+    }
+
+
+    public void SetDifficulty()
+    {
+        int diff = difficultyDropdown.value;
+        PlayerPrefs.SetInt("Difficulty", diff);
+        if (SceneManager.GetActiveScene().name == "Level1")
+        {
+            levelDifficultyManager.FirstLevelSetDifficulty(diff);
+        }
+        else if (SceneManager.GetActiveScene().name == "Level2")
+        {
+            levelDifficultyManager.SecondLevelSetDifficulty(diff);
+        }
     }
 
     public void deQuantity()
@@ -68,12 +92,14 @@ public class UIManagement : MonoBehaviour
         {
             panel.SetActive(false);
             isPanelOpen = false;
+            publicEnvironemnt.isPauesd = false;
         }
         else
         {
             panel.SetActive(true);
             isPanelOpen = true;
             scoreText.text = "SCORE " + score.ToString();
+            publicEnvironemnt.isPauesd = true;
 
         }
     }
@@ -95,4 +121,19 @@ public class UIManagement : MonoBehaviour
         setScore();
         panel.SetActive(true);
     }
+
+    public void InstructionPanelOpenClose()
+    {
+        if (isInstructionPanelOpen == true)
+        {
+            instructionPanel.SetActive(false);
+            isInstructionPanelOpen = false;
+        }
+        else
+        {
+            instructionPanel.SetActive(true);
+            isInstructionPanelOpen = true;
+        }
+    }
+    
 }

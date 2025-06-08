@@ -7,6 +7,7 @@ public class ShapeChecker : Shape
     public UIManagement ui;
     public ObjectSpawner spawner;
 
+    [SerializeField] MediumRotater mediumRotater;     //only for medium difficulty level
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Shape")
@@ -23,9 +24,10 @@ public class ShapeChecker : Shape
                 shapeController.playParticles(false);
 
             }
-            
+
             shapeController.respawn();
             spawner.spawn();
+            mediumRotater.doForDifferentLevels();
         }
     }
 

@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;
+using System.Collections;
 
 public class InFrontUIManagement : MonoBehaviour
 {
@@ -8,12 +8,25 @@ public class InFrontUIManagement : MonoBehaviour
 
     public float rotationSmoothness = 5f;
     private Quaternion targetRotation;
+    public float moveSpeed = 5f;
+    private bool isLocked = false; 
 
     void LateUpdate()
     {
-        transform.position = cameraPosition.position + cameraPosition.transform.TransformDirection(offset);
-        targetRotation = Quaternion.LookRotation(transform.position - cameraPosition.position);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSmoothness * Time.deltaTime);
+        if (!isLocked)
+        {
+            transform.position = cameraPosition.position + cameraPosition.transform.TransformDirection(offset);
+            targetRotation = Quaternion.LookRotation(transform.position - cameraPosition.position);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSmoothness * Time.deltaTime);
+        }
+        
     }
+    public void LockCanvas()
+    {
+        if (!isLocked) isLocked = true;
+        else isLocked = false;
+    }
+
+    
 
 }

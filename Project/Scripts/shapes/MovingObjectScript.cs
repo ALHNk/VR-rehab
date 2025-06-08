@@ -6,7 +6,7 @@ public class MovingObjectScript : MonoBehaviour
 {
     private Vector3 initialPosition;
     private Quaternion initialRotation;
-    public float initalSpeed;
+    public float[] initalSpeeds;
     [SerializeField] GrabInteractable grabInteractable;
     [SerializeField] HandGrabInteractable handGrabInteractable;
     [SerializeField] RandomSpawnerController spawnerController;
@@ -15,19 +15,28 @@ public class MovingObjectScript : MonoBehaviour
 
     private bool isRespawning = false;
     private float waitingTimer = -1f;
-    
+
+    public PublicEnvironemnt publicEnvironemnt;
 
     private float speed;
+    private int diff;
+
+
     void Start()
     {
-        speed = initalSpeed;
+        diff = PlayerPrefs.GetInt("Difficulty");
+        changeSpeedByDifficulty(diff);
         initialPosition = transform.position;
         initialRotation = transform.rotation;
     }
 
     void Update()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        if (!publicEnvironemnt.isPauesd)
+        {
+            transform.Translate(Vector3.forward * -speed * Time.deltaTime);
+        }
+        
 
         if ((grabInteractable.State == InteractableState.Select || handGrabInteractable.State == InteractableState.Select) && isRespawning == false)
         {
@@ -51,10 +60,10 @@ public class MovingObjectScript : MonoBehaviour
 
     public void respawn()
     {
-        ui.deQuantity();
+        // ui.deQuantity();
         transform.position = initialPosition;
         transform.rotation = initialRotation;
-        speed = initalSpeed;
+        changeSpeedByDifficulty(diff);
         spawnerController.randomSpawn(shapeSpawnersIndexInSpawnerController);
         ui.incScore();
         gameObject.SetActive(false);
@@ -66,6 +75,26 @@ public class MovingObjectScript : MonoBehaviour
         {
             ui.decScore();
             respawn();
+        }
+    }
+
+
+
+
+
+    public void changeSpeedByDifficulty(int diff)
+    {
+        if (diff == 0)
+        {
+            speed = initalSpeeds[0];
+        }
+        else if (diff == 1)
+        {
+            speed = initalSpeeds[1];
+        }
+        else if (diff == 2)
+        {
+            speed = initalSpeeds[2];
         }
     }
 }

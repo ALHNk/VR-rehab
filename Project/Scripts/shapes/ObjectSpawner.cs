@@ -35,8 +35,7 @@ public class ObjectSpawner : MonoBehaviour
     // }
 
     public void spawn()
-    {
-
+    { 
         ui.deQuantity();
         int random = Random.Range(0, shapesSize);
         shapes[random].SetActive(true);
