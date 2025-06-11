@@ -1,12 +1,12 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class HomeUIManagement : MonoBehaviour
 {
     public Text ScoreText;
-    public Dropdown QuanityDropdown;
-    public Text objectsText;
+	public Dropdown QuanityDropdown, DifficultyDropdown;
+	public Text objectsText;
     public void Start()
     {
         if (!PlayerPrefs.HasKey("ObjectsQuantity"))
@@ -15,12 +15,17 @@ public class HomeUIManagement : MonoBehaviour
         }
         int localScore = PlayerPrefs.GetInt("Score");
         ScoreText.text = "YOUR SCORE: " + localScore.ToString();
-        setTextOfObjects();
+	    setTextOfObjects();
+	    setValueOfDifficultyDropdown();
     }
     public void setTextOfObjects()
     {
         objectsText.text = "OBJECTS IN LEVEL: " + PlayerPrefs.GetInt("ObjectsQuantity");
     }
+	public void setValueOfDifficultyDropdown()
+	{
+		DifficultyDropdown.value = PlayerPrefs.GetInt("Difficulty");
+	}
 
     public void SetObjectsQuantity()
     {
@@ -28,9 +33,18 @@ public class HomeUIManagement : MonoBehaviour
         int quanityFromDropDown = int.Parse(QuanityDropdown.options[index].text);
         PlayerPrefs.SetInt("ObjectsQuantity", quanityFromDropDown);
     }
+	public void setDifficulty()
+	{
+		int diff = DifficultyDropdown.value;
+		PlayerPrefs.SetInt("Difficulty", diff);
+	}
     public void playLevel(int levelIndex)
     {
         SceneManager.LoadScene("Level" + levelIndex.ToString());
     }
+	public void Treadmil()
+	{
+		SceneManager.LoadScene("Treadmil");
+	}
 
 }

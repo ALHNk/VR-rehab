@@ -1,0 +1,54 @@
+{
+    "name": "Vive Tracker",
+    "maps": [
+        {
+            "name": "Vive Tracking Map",
+            "id": "4706d22c-9118-42d2-bc1f-79e95d5d3364",
+            "actions": [
+                {
+                    "name": "Position",
+                    "type": "Value",
+                    "id": "93902a3a-185a-47f6-ad43-9f38e63c6ea3",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Rotation",
+                    "type": "Value",
+                    "id": "868fc018-3e1b-44fb-8cad-9023b1497726",
+                    "expectedControlType": "Quaternion",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4f902a3f-ec3c-4618-8c43-7ae32b0411d3",
+                    "path": "<ViveController>/devicePosition",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "001c7274-a9c3-43c5-8279-7eed5edeba4c",
+                    "path": "<ViveController>/pointer/rotation",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
