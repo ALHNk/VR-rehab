@@ -1,15 +1,15 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TestAndDebug : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
+	public OpeningDecsription uju;
+	
+	// Update is called every frame, if the MonoBehaviour is enabled.
+	protected void Update()
+	{
+		if(Input.GetKeyDown(KeyCode.O))
+		{
+			uju.OpenOrClose();
+		}
+	}
 }
