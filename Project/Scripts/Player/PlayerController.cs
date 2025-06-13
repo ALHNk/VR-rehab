@@ -1,4 +1,4 @@
-using Unity.VisualScripting;
+﻿using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,16 +6,28 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public float speed;
-    public float rotationSpeed;
+	public float rotationSpeed;
+	public Camera centerRigAnchor;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+	
     }
 
     // Update is called once per frame
     void Update()
-    {
+	{
+		float cameraYaw = centerRigAnchor.transform.localEulerAngles.y;
+
+		// Rotate the player by that amount
+		transform.Rotate(0, cameraYaw, 0);
+
+		// Then reset the camera's local Y rotation to zero so it doesn’t keep rotating
+		centerRigAnchor.transform.localEulerAngles = new Vector3(
+			centerRigAnchor.transform.localEulerAngles.x,
+			0f,
+			centerRigAnchor.transform.localEulerAngles.z
+		);
         Vector2 thumbStick = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick);
         if (thumbStick.magnitude > 0.1f)
         {
